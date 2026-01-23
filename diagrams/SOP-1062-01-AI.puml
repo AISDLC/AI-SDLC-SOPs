@@ -1,0 +1,79 @@
+@startuml
+title SOP-1062-01-AI Risk Register Management
+
+participant "Delivery Lead" as DL
+participant "Account Manager" as AM
+participant "Technical Lead" as TL
+participant "AI-IRB Liaison" as IRB
+participant "Quality Assurance" as QA
+participant "Risk Owner" as RO
+participant "Client Sponsor" as CS
+
+== Risk Register Initialization ==
+DL -> DL: Create register from template
+DL -> AM: Gather commercial/relationship risks
+DL -> TL: Gather technology/integration risks
+DL -> DL: Review SOW, client profile, historical patterns
+DL -> DL: Score risks (L×I) and assign owners
+DL -> IRB: Flag risks with ethical/compliance implications
+IRB -> DL: Review and approve flagged risks
+DL -> QA: Validate register completeness
+QA -> DL: Confirm baseline ready
+
+== Ongoing Risk Identification ==
+RO -> DL: Submit new risk (any team member)
+DL -> DL: Triage within 24 hours
+alt High Priority (Score ≥15)
+    DL -> AM: Immediate notification
+    DL -> IRB: Immediate notification if AI-IRB flagged
+else Medium/Low Priority
+    DL -> DL: Add to weekly review agenda
+end
+
+== Weekly Risk Review ==
+DL -> TL: Review open risks
+DL -> RO: Request status updates
+RO -> DL: Provide mitigation progress
+alt Mitigation complete
+    DL -> DL: Re-score risk
+else Mitigation blocked
+    DL -> AM: Escalate blocker
+end
+
+== Risk Escalation ==
+DL -> AM: Escalate High priority risks
+alt Client-dependent risk
+    AM -> CS: Escalate to client sponsor
+    CS -> AM: Provide resolution path
+end
+alt AI-IRB flagged risk
+    DL -> IRB: Escalate for compliance review
+    IRB -> IRB: Assess against AI-IRB thresholds
+    alt Exceeds threshold
+        IRB -> IRB: Escalate to AI-IRB Board
+    end
+end
+
+== Gate Checkpoint Review ==
+DL -> QA: Prepare gate checkpoint risk snapshot
+QA -> IRB: Submit for gate review
+IRB -> IRB: Review all flagged risks
+alt Gate-blocking risk unresolved
+    IRB -> DL: Gate passage blocked
+    DL -> RO: Prioritize resolution
+else All risks acceptable
+    IRB -> DL: Gate passage approved
+end
+
+== Risk Closure ==
+RO -> DL: Propose risk closure with rationale
+DL -> DL: Validate closure criteria
+alt Priority was High
+    DL -> AM: Request closure approval
+    DL -> IRB: Request closure approval
+    AM -> DL: Approve
+    IRB -> DL: Approve
+end
+DL -> DL: Update status to Closed, document rationale
+
+@enduml
